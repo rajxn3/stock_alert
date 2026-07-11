@@ -1,0 +1,26 @@
+name: Daily Stock WhatsApp Alert
+
+on:
+  schedule:
+    # ⚠️ 9:30 AM IST threshold-ku UTC time sariyaaga 4:00 AM (04 00)
+    - cron: '0 4 * * *'
+  workflow_dispatch: # Direct-ah manually run panni check panna indha button thevai
+
+jobs:
+  run-alert:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      run: |
+        pip install twilio requests
+
+    - name: Execute Script
+      run: python stock_alert.py
