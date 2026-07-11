@@ -20,7 +20,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        pip install twilio requests
+        pip install twilio requests feedparser
 
     - name: Execute Script
       run: python stock_alert.py
