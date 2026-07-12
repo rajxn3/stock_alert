@@ -112,4 +112,19 @@ def send_thanglish_stock_report():
             message = client.messages.create(
                 body=msg_body,
                 from_=TWILIO_WHATSAPP_NUMBER,
-                
+                to=MY_WHATSAPP_NUMBER
+            )
+            print(f"✨ {company_name} message delivered! SID: {message.sid}")
+        except Exception as e:
+            print(f"❌ Twilio Error for {company_name}: {e}")
+        counter += 1
+        
+    # 3. Send Footer
+    footer = "-----------------------------------------\n🤝 _Automated Gemini AI Tracker_"
+    try:
+        client.messages.create(body=footer, from_=TWILIO_WHATSAPP_NUMBER, to=MY_WHATSAPP_NUMBER)
+    except Exception as e:
+        print(f"❌ Twilio Footer Error: {e}")
+
+if __name__ == "__main__":
+    send_thanglish_stock_report()
