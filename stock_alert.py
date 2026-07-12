@@ -86,9 +86,9 @@ def get_stock_data(ticker, company_name):
     # 3. Get AI Analysis
     ai_analysis = generate_ai_analysis(company_name, price_text, news_text)
     
-    # If AI fails, make the error shorter and cleaner
-    if "❌ AI Error" in ai_analysis:
-        ai_analysis = "⚠️ AI Server Error: Ippo AI thalapathy busy-ah irukaaru, later try pannunga."
+    # If AI fails or key is missing, hide the AI section completely
+    if "❌ AI Error" in ai_analysis or "⚠️ Gemini" in ai_analysis:
+        return f"{display_price}\n\n*Puthu News (Live):*\n{news_text}"
     
     return f"{display_price}\n\n*Puthu News (Live):*\n{news_text}\n*AI Analysis (Thanglish):*\n{ai_analysis}"
 
@@ -97,7 +97,7 @@ def send_thanglish_stock_report():
     client = Client(ACCOUNT_SID, AUTH_TOKEN)
     
     # 1. Send Header Message
-    header = "🤖 *LIVE AI STOCK REPORT (THANGLISH)* 🔥\n-----------------------------------------"
+    header = "🤖 *LIVE AI STOCK REPORT (THANGLISH)* 🔥\n----------"
     try:
         client.messages.create(body=header, from_=TWILIO_WHATSAPP_NUMBER, to=MY_WHATSAPP_NUMBER)
     except Exception as e:
@@ -120,7 +120,7 @@ def send_thanglish_stock_report():
         counter += 1
         
     # 3. Send Footer
-    footer = "-----------------------------------------\n🤝 _Automated Gemini AI Tracker_"
+    footer = "-------\n🤝 _Automated Gemini AI Tracker_"
     try:
         client.messages.create(body=footer, from_=TWILIO_WHATSAPP_NUMBER, to=MY_WHATSAPP_NUMBER)
     except Exception as e:
