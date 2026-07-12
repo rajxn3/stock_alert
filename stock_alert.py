@@ -1,9 +1,14 @@
 import feedparser
 from twilio.rest import Client
+import os
+import sys
+
+# Windows default encoding fix for GitHub Actions
+sys.stdout.reconfigure(encoding='utf-8')
 
 # ----------------- TWILIO WHATSAPP CONFIGURATIONS -----------------
-ACCOUNT_SID = "AC8d63e90a0dd194800c0ef145f81b250c" 
-AUTH_TOKEN = "fd74e9a12253ba66b807e36f6cd8cb55"
+ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "AC8d63e90a0dd194800c0ef145f81b250c") 
+AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "fd74e9a12253ba66b807e36f6cd8cb55")
 
 TWILIO_WHATSAPP_NUMBER = "whatsapp:+14155238886"                  
 MY_WHATSAPP_NUMBER = "whatsapp:+919585181937"             
